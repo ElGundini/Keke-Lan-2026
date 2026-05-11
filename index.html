@@ -3,229 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAN Party - Together Schedule</title>
+    <title>KEKE LAN 2026 | PROTOCOL-X</title>
     <style>
         :root {
-            --bg: #050505;
-            --card-bg: #121212;
-            --accent: #00ff88; /* Vert Néon pour le côté Gaming */
-            --secondary: #00d4ff;
-            --text: #ffffff;
+            --bg: #050507;
+            --card: #0d0d12;
+            --accent: #00ff88;
+            --accent-glow: rgba(0, 255, 136, 0.3);
+            --steam: #1b2838;
+            --text: #e0e0e0;
+            --panel-border: #1a1a24;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Courier New', monospace;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
+            /* On centre le contenu du body horizontalement */
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; 
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #16161a 0%, #050507 100%);
         }
 
-        .container { width: 100%; max-width: 900px; }
+        /* Effet Scanline (Lignes de balayage CRT) */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 9999;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            opacity: 0.2;
+        }
 
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-size: 2.5rem; letter-spacing: 4px; color: var(--accent); margin: 0; }
-        header p { opacity: 0.6; }
+        .container { 
+            width: 100%; 
+            max-width: 900px; /* Largeur optimale pour la lecture */
+            position: relative; 
+            z-index: 1;
+        }
 
-        /* JEU ACTUEL / PROCHAIN */
+        header { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--accent);
+        }
+        
+        header h1 { 
+            font-size: 3rem;
+            color: var(--accent); 
+            text-transform: uppercase;
+            text-shadow: 0 0 15px var(--accent);
+            margin: 0;
+            letter-spacing: 4px;
+        }
+
+        /* Featured Card Cyberpunk */
         .featured-card {
-            background: var(--card-bg);
+            background: var(--card);
+            border: 1px solid var(--panel-border);
+            clip-path: polygon(0 0, 95% 0, 100% 8%, 100% 100%, 5% 100%, 0 92%);
+            margin-bottom: 60px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.7);
+            position: relative;
+        }
+
+        .featured-card::after {
+            content: "[SYSTEM_ALIVE]";
+            position: absolute;
+            top: 15px; right: 25px;
+            font-size: 0.7rem;
+            color: var(--accent);
+            opacity: 0.6;
+        }
+
+        .featured-img { 
+            width: 100%; 
+            height: 400px; 
+            object-fit: cover; 
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .featured-body { padding: 40px; text-align: center; }
+
+        .steam-btn {
+            background: var(--steam);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
             border: 2px solid var(--accent);
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 50px;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
-            text-align: center;
-        }
-
-        .featured-img {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-        }
-
-        .featured-info { padding: 30px; }
-
-        .timer-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: all 0.2s ease;
+            box-shadow: 6px 6px 0px var(--accent);
+            display: inline-block;
             margin-top: 20px;
         }
 
-        .timer-box {
-            background: rgba(255,255,255,0.05);
-            padding: 10px;
-            border-radius: 10px;
-            min-width: 70px;
+        .steam-btn:hover {
+            box-shadow: 0px 0px 20px var(--accent);
+            transform: translate(3px, 3px);
+            background: #2a475e;
         }
 
-        .timer-val { font-size: 1.8rem; font-weight: bold; color: var(--accent); display: block; }
-        .timer-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.7; }
-
-        /* LA SUITE AVEC IMAGES */
-        .upcoming-grid {
+        /* Grille de jeux */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
         }
 
         .game-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--card);
+            border-left: 4px solid #222;
+            transition: all 0.3s ease;
             position: relative;
         }
 
         .game-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--secondary);
+            border-left: 4px solid var(--accent);
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
-        .game-card img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
+        .game-card img { width: 100%; height: 150px; object-fit: cover; opacity: 0.7; }
+        .game-card:hover img { opacity: 1; }
+
+        .game-card-info { padding: 20px; border: 1px solid var(--panel-border); border-top: none; }
+        
+        .game-title { color: #fff; font-size: 1.1rem; text-transform: uppercase; margin-top: 8px; }
+        .game-meta { font-size: 0.8rem; color: var(--accent); font-weight: bold; }
+
+        #timer { 
+            font-size: 3.5rem; 
+            color: #fff; 
+            text-shadow: 0 0 20px var(--accent);
+            margin: 20px 0;
+            font-weight: 900;
         }
 
-        .game-card-content { padding: 15px; }
+        .passed { opacity: 0.25; filter: grayscale(1); }
 
-        .badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--secondary);
-            color: black;
-            font-weight: bold;
-            font-size: 0.7rem;
-            padding: 5px 10px;
-            border-radius: 5px;
+        /* Le fameux bouton Kéké Turbo */
+        .tournament-btn {
+            position: fixed;
+            bottom: 30px; 
+            right: 30px;
+            width: 120px; 
+            height: 120px;
+            z-index: 10000;
+            filter: drop-shadow(0 0 12px #ffff00);
+            animation: keke-bounce 2s infinite ease-in-out;
+            transition: transform 0.2s;
         }
 
-        .game-time { color: var(--secondary); font-weight: bold; font-size: 0.85rem; }
-        .game-name { display: block; margin-top: 5px; font-size: 1.1rem; font-weight: bold; }
+        .tournament-btn:hover {
+            transform: scale(1.2) rotate(5deg);
+            filter: drop-shadow(0 0 25px #ffff00);
+        }
 
-        .passed { opacity: 0.4; filter: grayscale(1); }
+        @keyframes keke-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @media (max-width: 600px) {
+            #timer { font-size: 2rem; }
+            .tournament-btn { width: 80px; height: 80px; bottom: 15px; right: 15px; }
+            header h1 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>LAN TOGETHER</h1>
-        <p>22 - 24 MAI 2026</p>
+        <h1>KEKE LAN 2026</h1>
+        <div style="font-size: 0.8rem; color: var(--accent); letter-spacing: 2px;">STATUS: ONLINE // ENCRYPTED</div>
     </header>
 
-    <section id="next-game-focus" class="featured-card">
-        <img id="main-img" class="featured-img" src="" alt="Main Game">
-        <div class="featured-info">
-            <span id="main-status" style="text-transform: uppercase; letter-spacing: 2px; color: var(--accent);">Prochainement</span>
-            <h2 id="main-title" style="font-size: 2.2rem; margin: 10px 0;">Chargement...</h2>
-            
-            <div class="timer-container" id="main-timer">
-                <div class="timer-box"><span id="d" class="timer-val">00</span><span class="timer-label">Jours</span></div>
-                <div class="timer-box"><span id="h" class="timer-val">00</span><span class="timer-label">Heures</span></div>
-                <div class="timer-box"><span id="m" class="timer-val">00</span><span class="timer-label">Minutes</span></div>
-            </div>
+    <section class="featured-card" id="main-section">
+        <img id="main-img" class="featured-img" src="" alt="">
+        <div class="featured-body">
+            <div id="status-label" style="color: var(--accent); letter-spacing: 4px; font-size: 0.9rem;">> EN ATTENTE</div>
+            <h2 id="main-title" style="margin: 10px 0; font-size: 2.2rem; letter-spacing: -1px;">CHARGEMENT...</h2>
+            <div id="timer">00:00:00</div>
+            <a id="main-steam" href="#" class="steam-btn">
+                LANCER LE JEU
+            </a>
         </div>
     </section>
 
-    <h2 style="margin-bottom: 25px; border-left: 5px solid var(--secondary); padding-left: 15px;">La suite du programme</h2>
-    <div class="upcoming-grid" id="full-list">
-        </div>
+    <h2 style="margin-bottom: 30px; font-size: 1.2rem; color: var(--accent); text-align: left; border-left: 4px solid var(--accent); padding-left: 15px;">
+        LA SUITE DU PROGRAMME
+    </h2>
+    
+    <div class="grid" id="game-list"></div>
 </div>
+
+<a href="https://elgundini.github.io/Lethal-League-Tournoi/" class="tournament-btn" title="REJOINDRE LE TOURNOI !">
+    <img src="https://i.ibb.co/4RW5JpL1/kekelanlethalleague.png" alt="Tournament Logo" style="width:100%; height:100%; object-fit:contain;">
+</a>
 
 <script>
     const games = [
-        { 
-            name: "Witch It (Prop Hunt)", 
-            date: "2026-05-22T21:00:00", 
-            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/559650/header.jpg",
-            day: "Vendredi"
-        },
-        { 
-            name: "R.E.P.O", 
-            date: "2026-05-23T10:00:00", 
-            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3006130/header.jpg",
-            day: "Samedi"
-        },
-        { 
-            name: "Trackmania", 
-            date: "2026-05-23T13:00:00", 
-            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1343620/header.jpg",
-            day: "Samedi"
-        },
-        { 
-            name: "Lethal League", 
-            date: "2026-05-23T21:00:00", 
-            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/261180/header.jpg",
-            day: "Samedi"
-        },
-        { 
-            name: "Counter-Strike 2", 
-            date: "2026-05-24T14:00:00", 
-            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/730/header.jpg",
-            day: "Dimanche"
-        }
+        { name: "LAST TRAIN OUTTA' WORMTOWN", steamId: "2318480", date: "2026-05-22T20:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2318480/header.jpg?t=1752864862", day: "VEN" },
+        { name: "LOCKDOWN Protocol", steamId: "2780980", date: "2026-05-22T22:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2780980/header.jpg?t=1763485356", day: "VEN" },
+        { name: "Counter-Strike 2", steamId: "730", date: "2026-05-23T00:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/header.jpg?t=1749053861", day: "SAM" },	
+        { name: "Lethal League", steamId: "261180", date: "2026-05-23T13:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/261180/header.jpg?t=1667229581", day: "SAM" },	
+        { name: "Marvel Rivals", steamId: "2767030", date: "2026-05-23T14:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2767030/975bfe11c5b6843c866587138aec911964b60c85/header.jpg?t=1778133944", day: "SAM" },	
+        { name: "Mini Royale", steamId: "1657090", date: "2026-05-23T16:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1657090/header.jpg?t=1748336130", day: "SAM" },	
+        { name: "Wreckfest", steamId: "228380", date: "2026-05-23T21:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/228380/header.jpg?t=1742490584", day: "SAM" },
+        { name: "Witch It", steamId: "559650", date: "2026-05-23T23:00:00", img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/559650/header.jpg", day: "SAM" },
+        { name: "Age of Mythology", steamId: "1934680", date: "2026-05-24T10:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1934680/header.jpg?t=1777489006", day: "DIM" },
+        { name: "Trackmania", steamId: "2225070", date: "2026-05-23T13:13:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2225070/7f7b095f71d8e3b54612927c0bb4b9f0713eac21/header.jpg?t=1769529679", day: "SAM" }
     ];
+
+    let currentGame = null;
 
     function init() {
         const now = new Date();
-        const listEl = document.getElementById('full-list');
-        let featuredSet = false;
+        const list = document.getElementById('game-list');
+        list.innerHTML = '';
 
-        listEl.innerHTML = '';
+        currentGame = games.find(g => {
+            const gameDate = new Date(g.date);
+            return gameDate > now || (now - gameDate) < 3600000; 
+        }) || games[0];
 
-        games.forEach((game) => {
+        document.getElementById('main-title').innerText = currentGame.name;
+        document.getElementById('main-img').src = currentGame.img;
+        document.getElementById('main-steam').href = `steam://run/${currentGame.steamId}`;
+
+        games.forEach(game => {
             const gameDate = new Date(game.date);
-            const isPassed = gameDate < now;
-            
-            // On définit le jeu "Héros" (celui qui arrive)
-            if (!isPassed && !featuredSet) {
-                setFeatured(game);
-                featuredSet = true;
-            }
+            const isPassed = gameDate < now && game !== currentGame;
 
-            // On ajoute à la galerie
             const card = document.createElement('div');
             card.className = `game-card ${isPassed ? 'passed' : ''}`;
             
             card.innerHTML = `
-                <img src="${game.img}" alt="${game.name}">
-                <div class="badge">${isPassed ? 'TERMINÉ' : game.day}</div>
-                <div class="game-card-content">
-                    <span class="game-time">${gameDate.getHours()}h00</span>
-                    <span class="game-name">${game.name}</span>
+                <img src="${game.img}">
+                <div class="game-card-info">
+                    <div class="game-meta">${game.day} // ${gameDate.getHours()}H${gameDate.getMinutes().toString().padStart(2, '0')}</div>
+                    <div class="game-title">${game.name}</div>
                 </div>
             `;
-            listEl.appendChild(card);
+            list.appendChild(card);
         });
     }
 
-    function setFeatured(game) {
-        document.getElementById('main-title').innerText = game.name;
-        document.getElementById('main-img').src = game.img;
-        
-        const countdown = setInterval(() => {
-            const diff = new Date(game.date) - new Date();
-            if (diff <= 0) {
-                clearInterval(countdown);
-                init();
-            } else {
-                document.getElementById('d').innerText = Math.floor(diff / 864e5).toString().padStart(2, '0');
-                document.getElementById('h').innerText = Math.floor((diff % 864e5) / 36e5).toString().padStart(2, '0');
-                document.getElementById('m').innerText = Math.floor((diff % 36e5) / 6e4).toString().padStart(2, '0');
-            }
-        }, 1000);
+    function updateCountdown() {
+        if (!currentGame) return;
+        const now = new Date();
+        const targetDate = new Date(currentGame.date);
+        const diff = targetDate - now;
+        const timerElement = document.getElementById('timer');
+        const statusLabel = document.getElementById('status-label');
+
+        if (diff <= 0) {
+            timerElement.innerText = "MISSION_ACTIVE";
+            timerElement.style.color = "var(--accent)";
+            statusLabel.innerText = "> EN COURS";
+        } else {
+            const h = Math.floor(diff / 36e5).toString().padStart(2, '0');
+            const m = Math.floor((diff % 36e5) / 6e4).toString().padStart(2, '0');
+            const s = Math.floor((diff % 6e4) / 1000).toString().padStart(2, '0');
+            timerElement.innerText = `${h}:${m}:${s}`;
+            timerElement.style.color = "white";
+            statusLabel.innerText = "> NEXT MISSION";
+        }
     }
 
     init();
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+    setInterval(init, 300000);
 </script>
-
 </body>
 </html>
