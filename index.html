@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAN Party - Together Schedule</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: #121212;
+            --accent: #00ff88; /* Vert Néon pour le côté Gaming */
+            --secondary: #00d4ff;
+            --text: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container { width: 100%; max-width: 900px; }
+
+        header { text-align: center; margin-bottom: 40px; }
+        header h1 { font-size: 2.5rem; letter-spacing: 4px; color: var(--accent); margin: 0; }
+        header p { opacity: 0.6; }
+
+        /* JEU ACTUEL / PROCHAIN */
+        .featured-card {
+            background: var(--card-bg);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 50px;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+            text-align: center;
+        }
+
+        .featured-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        .featured-info { padding: 30px; }
+
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .timer-box {
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 10px;
+            min-width: 70px;
+        }
+
+        .timer-val { font-size: 1.8rem; font-weight: bold; color: var(--accent); display: block; }
+        .timer-label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.7; }
+
+        /* LA SUITE AVEC IMAGES */
+        .upcoming-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .game-card-content { padding: 15px; }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: black;
+            font-weight: bold;
+            font-size: 0.7rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .game-time { color: var(--secondary); font-weight: bold; font-size: 0.85rem; }
+        .game-name { display: block; margin-top: 5px; font-size: 1.1rem; font-weight: bold; }
+
+        .passed { opacity: 0.4; filter: grayscale(1); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>LAN TOGETHER</h1>
+        <p>22 - 24 MAI 2026</p>
+    </header>
+
+    <section id="next-game-focus" class="featured-card">
+        <img id="main-img" class="featured-img" src="" alt="Main Game">
+        <div class="featured-info">
+            <span id="main-status" style="text-transform: uppercase; letter-spacing: 2px; color: var(--accent);">Prochainement</span>
+            <h2 id="main-title" style="font-size: 2.2rem; margin: 10px 0;">Chargement...</h2>
+            
+            <div class="timer-container" id="main-timer">
+                <div class="timer-box"><span id="d" class="timer-val">00</span><span class="timer-label">Jours</span></div>
+                <div class="timer-box"><span id="h" class="timer-val">00</span><span class="timer-label">Heures</span></div>
+                <div class="timer-box"><span id="m" class="timer-val">00</span><span class="timer-label">Minutes</span></div>
+            </div>
+        </div>
+    </section>
+
+    <h2 style="margin-bottom: 25px; border-left: 5px solid var(--secondary); padding-left: 15px;">La suite du programme</h2>
+    <div class="upcoming-grid" id="full-list">
+        </div>
+</div>
+
+<script>
+    const games = [
+        { 
+            name: "Witch It (Prop Hunt)", 
+            date: "2026-05-22T21:00:00", 
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/559650/header.jpg",
+            day: "Vendredi"
+        },
+        { 
+            name: "R.E.P.O", 
+            date: "2026-05-23T10:00:00", 
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3006130/header.jpg",
+            day: "Samedi"
+        },
+        { 
+            name: "Trackmania", 
+            date: "2026-05-23T13:00:00", 
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1343620/header.jpg",
+            day: "Samedi"
+        },
+        { 
+            name: "Lethal League", 
+            date: "2026-05-23T21:00:00", 
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/261180/header.jpg",
+            day: "Samedi"
+        },
+        { 
+            name: "Counter-Strike 2", 
+            date: "2026-05-24T14:00:00", 
+            img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/730/header.jpg",
+            day: "Dimanche"
+        }
+    ];
+
+    function init() {
+        const now = new Date();
+        const listEl = document.getElementById('full-list');
+        let featuredSet = false;
+
+        listEl.innerHTML = '';
+
+        games.forEach((game) => {
+            const gameDate = new Date(game.date);
+            const isPassed = gameDate < now;
+            
+            // On définit le jeu "Héros" (celui qui arrive)
+            if (!isPassed && !featuredSet) {
+                setFeatured(game);
+                featuredSet = true;
+            }
+
+            // On ajoute à la galerie
+            const card = document.createElement('div');
+            card.className = `game-card ${isPassed ? 'passed' : ''}`;
+            
+            card.innerHTML = `
+                <img src="${game.img}" alt="${game.name}">
+                <div class="badge">${isPassed ? 'TERMINÉ' : game.day}</div>
+                <div class="game-card-content">
+                    <span class="game-time">${gameDate.getHours()}h00</span>
+                    <span class="game-name">${game.name}</span>
+                </div>
+            `;
+            listEl.appendChild(card);
+        });
+    }
+
+    function setFeatured(game) {
+        document.getElementById('main-title').innerText = game.name;
+        document.getElementById('main-img').src = game.img;
+        
+        const countdown = setInterval(() => {
+            const diff = new Date(game.date) - new Date();
+            if (diff <= 0) {
+                clearInterval(countdown);
+                init();
+            } else {
+                document.getElementById('d').innerText = Math.floor(diff / 864e5).toString().padStart(2, '0');
+                document.getElementById('h').innerText = Math.floor((diff % 864e5) / 36e5).toString().padStart(2, '0');
+                document.getElementById('m').innerText = Math.floor((diff % 36e5) / 6e4).toString().padStart(2, '0');
+            }
+        }, 1000);
+    }
+
+    init();
+</script>
+
+</body>
+</html>
