@@ -106,88 +106,75 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 setInterval(init, 300000);
 
-// --- CONFIGURATION 3D KEKE ---
+// --- 2. CONFIGURATION THREE.JS (TÊTE 3D) ---
 const container = document.getElementById('logo-3d-container');
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-
-renderer.setSize(container.clientWidth, container.clientHeight);
-container.appendChild(renderer.domElement);
-
-// Lumières
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-scene.add(ambientLight);
-const pointLight = new THREE.PointLight(0x00ff88, 2); // Lumière néon verte
-pointLight.position.set(5, 5, 5);
-scene.add(pointLight);
-
 let headModel;
-let ringGroup = new THREE.Group();
-scene.add(ringGroup);
+let scene, camera, renderer, clock;
 
-// Chargement de la tête
-const loader = new THREE.GLTFLoader();
-loader.load('head.glb', (gltf) => {
-    headModel = gltf.scene;
-    headModel.scale.set(3, 3, 3);
-    scene.add(headModel);
-}, undefined, (error) => { console.error("Erreur chargement tête:", error); });
+if (container) {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    clock = new THREE.Clock();
 
-// Création de l'anneau de texte (Effet Saturne)
-function createTextRing() {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 1024;
-    canvas.height = 64;
-    
-    ctx.fillStyle = "rgba(0,0,0,0)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#00ff88"; // Couleur néon
-    ctx.font = "bold 40px Courier New";
-    ctx.textAlign = "center";
-    
-    const text = " KEKE LAN 2026 • ".repeat(4);
-    ctx.fillText(text, canvas.width / 2, 45);
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
 
-    const texture = new THREE.CanvasTexture(canvas);
-    const geometry = new THREE.TorusGeometry(3, 0.4, 16, 100);
-    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
-    const ring = new THREE.Mesh(geometry, material);
-    
-    ring.rotation.x = Math.PI / 2.5; // Inclinaison type Saturne
-    ringGroup.add(ring);
+    // Lumières
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0x00ff88, 2);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+
+    // Chargement de la tête
+    const loader = new THREE.GLTFLoader();
+    loader.load('./head.glb', (gltf) => {
+        headModel = gltf.scene;
+        
+        // Centrage automatique du modèle
+        const box = new THREE.Box3().setFromObject(headModel);
+        const center = box.getCenter(new THREE.Vector3());
+        headModel.position.x += (headModel.position.x - center.x);
+        headModel.position.y += (headModel.position.y - center.y);
+        headModel.position.z += (headModel.position.z - center.z);
+
+        headModel.scale.set(3, 3, 3); // Grosse taille
+        scene.add(headModel);
+        console.log("Tête 3D chargée et centrée !");
+    }, undefined, (error) => {
+        console.error("Erreur de chargement du fichier .glb :", error);
+    });
+
+    camera.position.z = 10; // Recul pour que la grosse tête rentre dans le cadre
 }
-createTextRing();
-
-camera.position.z = 7;
-
-// Animation
-let clock = new THREE.Clock();
-
+// --- 4. BOUCLE D'ANIMATION (3D) ---
 function animate() {
     requestAnimationFrame(animate);
-    let t = clock.getElapsedTime();
+    const t = clock.getElapsedTime();
 
     if (headModel) {
-        // Effet "Dance" plus prononcé sur une grosse tête
-        const bounce = 1 + Math.sin(t * 4) * 0.08; 
-        headModel.scale.set(3 * bounce, 3 * bounce, 3 * bounce); // On garde l'échelle à 3
+        // Effet Dance : Zoom/Dezoom léger
+        const bounce = 1 + Math.sin(t * 4) * 0.05; 
+        headModel.scale.set(3 * bounce, 3 * bounce, 3 * bounce);
         
+        // Rotations pour donner vie
         headModel.rotation.y = Math.sin(t * 2) * 0.2; // Oscillation gauche/droite
         headModel.rotation.z = Math.cos(t * 3) * 0.1; // Inclinaison
     }
 
-    // On a supprimé la rotation de l'anneau ici
-    
     renderer.render(scene, camera);
 }
 
-// Gérer le redimensionnement
+// Gestion du redimensionnement de la fenêtre
 window.addEventListener('resize', () => {
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    if (container && camera && renderer) {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    }
 });
 
-animate();
+// Lancement
+init();
