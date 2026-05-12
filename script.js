@@ -176,3 +176,4 @@ window.addEventListener('resize', () => {
 
 // Lancement
 init();
+animate()
