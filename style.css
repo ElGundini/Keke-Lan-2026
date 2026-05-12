@@ -66,32 +66,90 @@ header h1 {
 }
 
 /* Featured Card Cyberpunk */
+
+C'est vrai que la partie Featured Card actuelle prend beaucoup de place verticalement (400px d'image + le texte), ce qui casse un peu le rythme "grille de données" typique d'une interface cyberpunk ou d'un dashboard de LAN.
+
+Pour l'intégrer davantage dans le thème "Protocol-X", je te suggère de passer sur un layout en deux colonnes (Split Layout) pour cette section. L'idée est de mettre l'image à gauche et les infos de jeu/timer à droite, tout en ajoutant des éléments décoratifs (coins coupés, bordures tech).
+
+Voici les modifications à appliquer :
+
+1. Modification du HTML (index.html)
+On enveloppe le contenu de la featured-card pour mieux le structurer.
+
+HTML
+<section class="featured-card" id="main-section">
+    <div class="featured-content">
+        <div class="featured-visual">
+            <img id="main-img" class="featured-img" src="" alt="">
+        </div>
+        <div class="featured-body">
+            <div id="status-label" class="status-label">> EN ATTENTE</div>
+            <h2 id="main-title" class="main-title">CHARGEMENT...</h2>
+            <div id="timer">00:00:00</div>
+            <a id="main-steam" href="#" class="steam-btn">LANCER LE JEU</a>
+        </div>
+    </div>
+</section>
+2. Mise à jour du CSS (style.css)
+Remplace tes styles actuels de .featured-card par ceux-ci pour obtenir un look plus compact et "industriel" :
+
+CSS
+/* Featured Card : Refonte en mode "Dashboard" */
 .featured-card {
-    background: var(--card);
+    background: rgba(13, 13, 18, 0.8);
     border: 1px solid var(--panel-border);
-    clip-path: polygon(0 0, 95% 0, 100% 8%, 100% 100%, 5% 100%, 0 92%);
-    margin-bottom: 60px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.7);
+    /* Forme plus agressive avec coins coupés */
+    clip-path: polygon(0 0, 97% 0, 100% 10%, 100% 100%, 3% 100%, 0 90%);
+    margin-bottom: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 15px var(--accent-glow);
     position: relative;
+    overflow: hidden;
 }
 
-.featured-card::after {
-    content: "[SYSTEM_ALIVE]";
-    position: absolute;
-    top: 15px; right: 25px;
-    font-size: 0.7rem;
-    color: var(--accent);
-    opacity: 0.6;
+.featured-content {
+    display: flex;
+    flex-direction: row; /* Aligne image et texte côte à côte */
+    align-items: stretch;
+    min-height: 300px;
+}
+
+.featured-visual {
+    flex: 1.2; /* L'image prend un peu plus de place */
+    position: relative;
+    border-right: 2px solid var(--accent);
 }
 
 .featured-img { 
     width: 100%; 
-    height: 400px; 
+    height: 100%; 
     object-fit: cover; 
-    border-bottom: 3px solid var(--accent);
+    filter: brightness(0.8) contrast(1.2);
+    display: block;
 }
 
-.featured-body { padding: 40px; text-align: center; }
+.featured-body { 
+    flex: 1;
+    padding: 30px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left; /* Alignement à gauche pour faire plus "terminal" */
+    background: linear-gradient(90deg, rgba(0,255,136,0.05) 0%, transparent 100%);
+}
+
+@media (max-width: 768px) {
+    .featured-content {
+        flex-direction: column;
+    }
+    .featured-visual {
+        height: 200px;
+        border-right: none;
+        border-bottom: 2px solid var(--accent);
+    }
+    .featured-body {
+        text-align: center;
+    }
+}
 
 .status-label {
     color: var(--accent); 
@@ -100,9 +158,10 @@ header h1 {
 }
 
 .main-title {
-    margin: 10px 0; 
-    font-size: 2.2rem; 
-    letter-spacing: -1px;
+    margin: 5px 0; 
+    font-size: 1.8rem; /* Légèrement plus petit pour l'équilibre */
+    text-transform: uppercase;
+    color: #fff;
 }
 
 .steam-btn {
@@ -165,11 +224,10 @@ header h1 {
 .game-meta { font-size: 0.8rem; color: var(--accent); font-weight: bold; }
 
 #timer { 
-    font-size: 3.5rem; 
-    color: #fff; 
-    text-shadow: 0 0 20px var(--accent);
-    margin: 20px 0;
-    font-weight: 900;
+    font-size: 2.8rem; /* Plus compact */
+    margin: 10px 0;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
 }
 
 .passed { opacity: 0.25; filter: grayscale(1); }
@@ -273,4 +331,49 @@ header h1 {
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
+}
+.action-bar {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.sub-btn {
+    flex: 1;
+    background: rgba(26, 26, 36, 0.6);
+    color: var(--text);
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 1px solid var(--panel-border);
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
+}
+
+.sub-btn:hover {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+.btn-icon {
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+/* Ajustement pour le bouton Steam pour qu'il ne prenne pas toute la largeur si on est en side-by-side */
+.steam-btn {
+    align-self: flex-start;
+    margin-top: 10px;
+    width: auto;
+    padding: 12px 25px;
+    font-size: 0.9rem;
 }
