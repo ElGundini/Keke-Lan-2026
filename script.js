@@ -130,7 +130,7 @@ scene.add(ringGroup);
 const loader = new THREE.GLTFLoader();
 loader.load('head.glb', (gltf) => {
     headModel = gltf.scene;
-    headModel.scale.set(1.5, 1.5, 1.5);
+    headModel.scale.set(3, 3, 3);
     scene.add(headModel);
 }, undefined, (error) => { console.error("Erreur chargement tête:", error); });
 
@@ -170,16 +170,15 @@ function animate() {
     let t = clock.getElapsedTime();
 
     if (headModel) {
-        // Effet "Dance" : Zoom/Dezoom + Rotation légère
-        const bounce = 1 + Math.sin(t * 4) * 0.1; // Zoom
-        headModel.scale.set(1.5 * bounce, 1.5 * bounce, 1.5 * bounce);
+        // Effet "Dance" plus prononcé sur une grosse tête
+        const bounce = 1 + Math.sin(t * 4) * 0.08; 
+        headModel.scale.set(3 * bounce, 3 * bounce, 3 * bounce); // On garde l'échelle à 3
         
-        headModel.rotation.y = Math.sin(t * 2) * 0.2; // Rotation gauche/droite
+        headModel.rotation.y = Math.sin(t * 2) * 0.2; // Oscillation gauche/droite
         headModel.rotation.z = Math.cos(t * 3) * 0.1; // Inclinaison
     }
 
-    // Rotation de l'anneau
-    ringGroup.rotation.z -= 0.01; 
+    // On a supprimé la rotation de l'anneau ici
     
     renderer.render(scene, camera);
 }
