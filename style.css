@@ -466,24 +466,27 @@ CSS
     flex-direction: column;
 }
 
-.keke-dance {
-    width: 80px; 
-    height: auto;
-    position: absolute;
-    top: 1150px; 
-    left: 50%;
-    transform: translateX(-50%);
-    pointer-events: none;
-    z-index: 10;
-    
-    /* Nettoyage du fond blanc si le fichier n'est pas transparent */
-    mix-blend-mode: screen; 
-    filter: brightness(1.1) contrast(1.1); /* Redonne du peps aux couleurs */
+/* Container pour aligner le titre et l'image */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Espace entre le texte et l'image */
+    margin-bottom: 20px;
+}
 
-    /* Effet néon pour l'intégration Cyberpunk */
-    filter: drop-shadow(0 0 5px var(--accent-glow)); 
-    
+/* On réinitialise le style pour cette nouvelle position */
+.keke-dance-mini {
+    width: 60px; /* Taille ajustée pour le titre */
+    height: auto;
+    mix-blend-mode: screen; 
+    filter: brightness(1.1) contrast(1.1) drop-shadow(0 0 5px var(--accent-glow));
     animation: floating 3s infinite ease-in-out;
+    pointer-events: none;
+}
+
+/* On nettoie l'ancien style .keke-dance s'il ne sert plus ailleurs */
+.keke-dance {
+    display: none;
 }
 
 @keyframes floating {
