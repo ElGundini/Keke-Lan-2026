@@ -377,3 +377,116 @@ CSS
     padding: 12px 25px;
     font-size: 0.9rem;
 }
+/* BANDEAU NEWS DÉFILANT */
+.news-ticker {
+    width: 100%;
+    display: flex;
+    height: 35px;
+    align-items: center;
+    overflow: hidden;
+    position: fixed; 
+    top: 0;
+    left: 0;
+    z-index: 10001;
+    backdrop-filter: blur(5px);
+    background: rgba(0, 5, 7, 0.9); 
+    border-bottom: 1px solid rgba(0, 255, 136, 0.3); 
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.ticker-label {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+    box-shadow: 5px 0 15px var(--accent-glow);
+    z-index: 2;
+}
+
+.ticker-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+}
+
+.ticker-wrapper {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee-infinite 60s linear infinite; 
+    will-change: transform;
+}
+
+.ticker-text {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.ticker-text span {
+    padding: 0 40px;
+    font-size: 0.85rem;
+    color: rgba(0, 255, 136, 0.85); 
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.2); 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    font-weight: 500;
+}
+
+@keyframes marquee-infinite {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
+
+.news-ticker:hover .ticker-wrapper {
+    animation-play-state: paused;
+}
+
+.ticker-link {
+    color: #a0a0a0; 
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 255, 136, 0.5);
+    transition: all 0.3s ease;
+}
+
+.ticker-link:hover {
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+.discord-wrapper {
+    position: relative;
+    flex: 1; /* Pour garder l'alignement de ton action-bar */
+    display: flex;
+    flex-direction: column;
+}
+
+.keke-dance {
+    width: 80px; 
+    height: auto;
+    position: absolute;
+    top: 1150px; 
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 10;
+    
+    /* Nettoyage du fond blanc si le fichier n'est pas transparent */
+    mix-blend-mode: screen; 
+    filter: brightness(1.1) contrast(1.1); /* Redonne du peps aux couleurs */
+
+    /* Effet néon pour l'intégration Cyberpunk */
+    filter: drop-shadow(0 0 5px var(--accent-glow)); 
+    
+    animation: floating 3s infinite ease-in-out;
+}
+
+@keyframes floating {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
