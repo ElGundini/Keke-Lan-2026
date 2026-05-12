@@ -100,8 +100,6 @@ function updateCountdown() {
 
 
 
-// Initialisation
-init();
 setInterval(updateCountdown, 1000);
 updateCountdown();
 setInterval(init, 300000);
