@@ -264,3 +264,13 @@ header h1 {
     filter: grayscale(0);
     box-shadow: 0 0 10px var(--accent);
 }
+#loader-3d {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}

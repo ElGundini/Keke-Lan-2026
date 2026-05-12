@@ -128,6 +128,7 @@ if (container) {
 
     // Chargement de la tête
     const loader = new THREE.GLTFLoader();
+	const loadingText = document.getElementById('loader-3d'); // On récupère le texte
     loader.load('./head.glb', (gltf) => {
         headModel = gltf.scene;
         
@@ -135,15 +136,28 @@ if (container) {
         const box = new THREE.Box3().setFromObject(headModel);
         const center = box.getCenter(new THREE.Vector3());
         headModel.position.x += (headModel.position.x - center.x);
-        headModel.position.y += (headModel.position.y - center.y);
+        headModel.position.y += (headModel.position.y - center.y) -4;
         headModel.position.z += (headModel.position.z - center.z);
 
-        headModel.scale.set(3, 3, 3); // Grosse taille
-        scene.add(headModel);
-        console.log("Tête 3D chargée et centrée !");
-    }, undefined, (error) => {
-        console.error("Erreur de chargement du fichier .glb :", error);
-    });
+        headModel.scale.set(6, 6, 6); // Grosse taille
+        scene.add(headModel);// MASQUER LE TEXTE ICI
+    if (loadingText) {
+        loadingText.style.display = 'none';
+    }
+    
+    console.log("Tête 3D chargée !");
+}, 
+// Optionnel : Afficher la progression en %
+(xhr) => {
+    if (loadingText) {
+        const percent = Math.round((xhr.loaded / xhr.total) * 100);
+        loadingText.innerText = `[ CHARGEMENT DE LA KEKE HEAD: ${percent}% ]`;
+    }
+}, 
+(error) => {
+    console.error("Erreur :", error);
+    if (loadingText) loadingText.innerText = "[ ERREUR DE CHARGEMENT ]";
+});
 
     camera.position.z = 10; // Recul pour que la grosse tête rentre dans le cadre
 }
@@ -155,7 +169,7 @@ function animate() {
     if (headModel) {
         // Effet Dance : Zoom/Dezoom léger
         const bounce = 1 + Math.sin(t * 4) * 0.05; 
-        headModel.scale.set(3 * bounce, 3 * bounce, 3 * bounce);
+        headModel.scale.set(6 * bounce, 6 * bounce, 6 * bounce);
         
         // Rotations pour donner vie
         headModel.rotation.y = Math.sin(t * 2) * 0.2; // Oscillation gauche/droite
