@@ -19,8 +19,8 @@ const team = [
 	{ name: "JOACHIM", url: "https://steamcommunity.com/id/belougalamasse", avatar: "https://shared.akamai.steamstatic.com/community_assets/images/items/1504020/397b0a7e2d1355bca92d3e803270f7947ba973aa.gif" },
     { name: "KEVIN", url: "https://steamcommunity.com/profiles/76561197987155094", avatar: "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"},
 	{ name: "LUCAS", url: "https://steamcommunity.com/profiles/76561198823351876", avatar: "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg" },
-    { name: "MIKE", url: "https://steamcommunity.com/profiles/76561198040004012", avatar: "https://shared.akamai.steamstatic.com/community_assets/images/items/1944060/3c6e22e1856a08f4f1d7ee8dec21d7a28bb56eb2.gif" },
 	{ name: "MEUBLE", url: "https://steamcommunity.com/profiles/76561198009173233", avatar: "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg" },
+	{ name: "MIKE", url: "https://steamcommunity.com/profiles/76561198040004012", avatar: "https://shared.akamai.steamstatic.com/community_assets/images/items/1944060/3c6e22e1856a08f4f1d7ee8dec21d7a28bb56eb2.gif" },
     { name: "PATRICK", url: "https://steamcommunity.com/profiles/76561198239636418", avatar: "https://avatars.akamai.steamstatic.com/1718ce1abb48f406ab56648883dd799df9329140_full.jpg" },
     { name: "YASSINE", url: "https://steamcommunity.com/profiles/76561197994430925", avatar: "https://avatars.akamai.steamstatic.com/dd035a86e2e0e88cf120715c5a8bc23809a7b74b_full.jpg" }
 ];
