@@ -65,36 +65,7 @@ header h1 {
     letter-spacing: 2px;
 }
 
-/* Featured Card Cyberpunk */
 
-C'est vrai que la partie Featured Card actuelle prend beaucoup de place verticalement (400px d'image + le texte), ce qui casse un peu le rythme "grille de données" typique d'une interface cyberpunk ou d'un dashboard de LAN.
-
-Pour l'intégrer davantage dans le thème "Protocol-X", je te suggère de passer sur un layout en deux colonnes (Split Layout) pour cette section. L'idée est de mettre l'image à gauche et les infos de jeu/timer à droite, tout en ajoutant des éléments décoratifs (coins coupés, bordures tech).
-
-Voici les modifications à appliquer :
-
-1. Modification du HTML (index.html)
-On enveloppe le contenu de la featured-card pour mieux le structurer.
-
-HTML
-<section class="featured-card" id="main-section">
-    <div class="featured-content">
-        <div class="featured-visual">
-            <img id="main-img" class="featured-img" src="" alt="">
-        </div>
-        <div class="featured-body">
-            <div id="status-label" class="status-label">> EN ATTENTE</div>
-            <h2 id="main-title" class="main-title">CHARGEMENT...</h2>
-            <div id="timer">00:00:00</div>
-            <a id="main-steam" href="#" class="steam-btn">LANCER LE JEU</a>
-        </div>
-    </div>
-</section>
-2. Mise à jour du CSS (style.css)
-Remplace tes styles actuels de .featured-card par ceux-ci pour obtenir un look plus compact et "industriel" :
-
-CSS
-/* Featured Card : Refonte en mode "Dashboard" */
 .featured-card {
     background: rgba(13, 13, 18, 0.8);
     border: 1px solid var(--panel-border);
