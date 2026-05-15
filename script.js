@@ -300,69 +300,92 @@ if (partyBtn) {
         }
     });
 }
-// --- 6. SECRET MODE : PAT SUPREMACY ---
+// --- 6. SECRET MODE : PAT SUPREMACY (AVEC NETTOYAGE ET DANCE) ---
 const patTroll = document.getElementById('pat-troll');
 
 if (patTroll) {
     patTroll.addEventListener('click', () => {
-        // 1. Musique épique (démarre au moment de la gloire)
+        // A. ARRÊTER LE PARTY MODE S'IL EST EN COURS
+        document.body.classList.remove('party-active');
+        if (partyBtn) partyBtn.classList.remove('active');
+        
+        if (typeof partyAudio !== 'undefined') {
+            partyAudio.pause();
+            partyAudio.currentTime = 0;
+        }
+        
+        if (typeof partyInterval !== 'undefined') {
+            clearInterval(partyInterval);
+        }
+
+        // B. LANCER LE SACRE DE PAT
         const crownAudio = new Audio('music/crown.mp3');
         crownAudio.currentTime = 66; 
         crownAudio.play();
 
-        // 2. Supprimer l'espace du GLB (Le Canvas) pour éviter le vide
+        // Masquer le GLB
         const canvas = document.querySelector('canvas');
-        if (canvas) {
-            canvas.style.display = 'none'; 
-        }
+        if (canvas) canvas.style.display = 'none'; 
 
-        // 3. Changement du Header Status (L'édition devient le titre de gloire)
+        // Remplacer les textes
         const statusHeader = document.querySelector('.status-header');
-        if (statusHeader) {
-            statusHeader.innerText = "SEUL ET UNIQUE VAINQUEUR DE LA LAN CUP";
-            statusHeader.style.color = "#FFD700";
-            statusHeader.style.fontWeight = "bold";
-            // Petite animation de pulsation pour le style
-            statusHeader.style.animation = "pulse 1s infinite alternate";
-        }
+        if (statusHeader) statusHeader.innerText = "SEUL ET UNIQUE VAINQUEUR DE LA LAN CUP";
 
-        // 4. Changement du titre H1 principal
         const mainTitle = document.querySelector('h1');
         if (mainTitle) {
             mainTitle.innerText = "PAT LE GOOOOAAAAT";
             mainTitle.style.color = "#FFD700";
-            mainTitle.style.textShadow = "0 0 30px rgba(255, 215, 0, 1)";
         }
 
-        // 5. Remplacer toutes les images par le trophée/vainqueur
+        // Remplacer les images et les faire DANCER
         document.querySelectorAll('img').forEach(img => {
             img.src = 'images/lancupwinner.png';
+            img.classList.add('dancing-image'); // Ajout d'une classe pour l'animation
         });
 
-        // 6. TEMPÊTE D'OR MASSIVE (Confettis)
+        // C. TEMPÊTE D'OR
         setInterval(() => {
             confetti({
                 particleCount: 35,
                 spread: 160,
                 origin: { y: -0.2, x: Math.random() },
-                colors: ['#FFD700', '#FFFACD', '#DAA520', '#FFCC00'],
+                colors: ['#FFD700', '#FFFACD', '#DAA520'],
                 gravity: 1.1,
-                scalar: 3, // Encore plus gros !
+                scalar: 3,
                 ticks: 250
             });
         }, 50);
 
+        // Désactiver le bouton Party Mode pour de bon
+        if (partyBtn) {
+            partyBtn.style.pointerEvents = 'none';
+            partyBtn.style.opacity = '0.5';
+        }
+
         document.title = "🏆 PAT LE GOAT - UNIQUE VAINQUEUR 🏆";
-        
+
     }, { once: true });
 }
 
-// Ajoute ceci dans ton script ou ton CSS pour l'animation de pulsation
+// Ajoute ceci dans ton script ou ton CSS pour l'animation de danse et pulse
 const style = document.createElement('style');
 style.textContent = `
     @keyframes pulse {
         from { transform: scale(1); opacity: 0.8; }
         to { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* Animation pour faire danser les images */
+    @keyframes dance {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        25% { transform: translateY(-10px) rotate(-5deg); }
+        50% { transform: translateY(0) rotate(0deg); }
+        75% { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    /* Classe CSS à appliquer aux images pour qu'elles dansent */
+    .dancing-image {
+        animation: dance 0.6s infinite ease-in-out; /* Danse frénétique */
     }
 `;
 document.head.appendChild(style);
