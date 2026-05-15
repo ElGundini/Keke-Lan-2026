@@ -780,3 +780,60 @@ header h1 {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
+/* Animation Rainbow pour le Party Mode */
+.party-active {
+    animation: rainbow-bg 5s linear infinite !important;
+    background-image: none !important; /* On désactive le gradient radial par défaut */
+}
+
+@keyframes rainbow-bg {
+    0% { background-color: #ff0000; }
+    20% { background-color: #ff00ff; }
+    40% { background-color: #0000ff; }
+    60% { background-color: #00ffff; }
+    80% { background-color: #ffff00; }
+    100% { background-color: #ff0000; }
+}
+
+/* Optionnel : faire clignoter le bouton Party */
+#party-trigger.active {
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+    box-shadow: 0 0 20px var(--accent);
+}
+/* Le bouton Party Mode en version Arc-en-ciel */
+#party-trigger {
+    background: linear-gradient(
+        45deg, 
+        #ff0000, #ff00ff, #0000ff, #00ffff, #00ff88, #ffff00, #ff0000
+    ) !important;
+    background-size: 400% 400% !important;
+    color: #000 !important; /* Texte noir pour être lisible sur les couleurs claires */
+    font-weight: 900 !important;
+    border: none !important;
+    animation: rainbow-button 3s ease infinite !important;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s;
+}
+
+#party-trigger:hover {
+    transform: scale(1.1) rotate(-2deg);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+/* Animation du dégradé de fond du bouton */
+@keyframes rainbow-button {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* On ajuste la couleur du code 05. pour qu'il soit lisible sur le bouton */
+#party-trigger .nav-code {
+    color: #000 !important;
+    opacity: 0.7;
+}
+#pat-troll:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px #FFD700;
+}

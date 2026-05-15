@@ -260,3 +260,109 @@ function buyTshirt() {
         openPopup(text2, false);
     });
 }
+// --- 5. LOGIQUE PARTY MODE (VERSION PLUIE RAPIDE) ---
+let partyInterval = null;
+const partyAudio = new Audio('music/EverybodyFalls.mp3');
+partyAudio.loop = true;
+
+const partyBtn = document.getElementById('party-trigger');
+
+if (partyBtn) {
+    partyBtn.addEventListener('click', () => {
+        const isActive = document.body.classList.toggle('party-active');
+        partyBtn.classList.toggle('active');
+
+        if (isActive) {
+            partyAudio.play();
+            
+            partyInterval = setInterval(() => {
+                // On lance deux rafales (gauche et droite) qui tombent du haut
+                const defaults = {
+                    spread: 360,
+                    ticks: 50,       // Durée de vie plus courte pour plus de nervosité
+                    gravity: 2.5,    // Gravité augmentée pour une chute rapide
+                    decay: 0.94,
+                    startVelocity: 30,
+                    colors: ['#00ff88', '#ff00ff', '#00ffff', '#ffff00', '#ff0000']
+                };
+
+                // Rafale 1
+                confetti({
+                    ...defaults,
+                    particleCount: 40,
+                    origin: { x: Math.random(), y: -0.1 } // x aléatoire, y au-dessus de l'écran
+                });
+            }, 100); // Intervalle très court (0.1s) pour un flux continu
+        } else {
+            partyAudio.pause();
+            partyAudio.currentTime = 0;
+            clearInterval(partyInterval);
+        }
+    });
+}
+// --- 6. SECRET MODE : PAT SUPREMACY ---
+const patTroll = document.getElementById('pat-troll');
+
+if (patTroll) {
+    patTroll.addEventListener('click', () => {
+        // 1. Musique épique (démarre au moment de la gloire)
+        const crownAudio = new Audio('music/crown.mp3');
+        crownAudio.currentTime = 66; 
+        crownAudio.play();
+
+        // 2. Supprimer l'espace du GLB (Le Canvas) pour éviter le vide
+        const canvas = document.querySelector('canvas');
+        if (canvas) {
+            canvas.style.display = 'none'; 
+        }
+
+        // 3. Changement du Header Status (L'édition devient le titre de gloire)
+        const statusHeader = document.querySelector('.status-header');
+        if (statusHeader) {
+            statusHeader.innerText = "SEUL ET UNIQUE VAINQUEUR DE LA LAN CUP";
+            statusHeader.style.color = "#FFD700";
+            statusHeader.style.fontWeight = "bold";
+            // Petite animation de pulsation pour le style
+            statusHeader.style.animation = "pulse 1s infinite alternate";
+        }
+
+        // 4. Changement du titre H1 principal
+        const mainTitle = document.querySelector('h1');
+        if (mainTitle) {
+            mainTitle.innerText = "PAT LE GOOOOAAAAT";
+            mainTitle.style.color = "#FFD700";
+            mainTitle.style.textShadow = "0 0 30px rgba(255, 215, 0, 1)";
+        }
+
+        // 5. Remplacer toutes les images par le trophée/vainqueur
+        document.querySelectorAll('img').forEach(img => {
+            img.src = 'images/lancupwinner.png';
+        });
+
+        // 6. TEMPÊTE D'OR MASSIVE (Confettis)
+        setInterval(() => {
+            confetti({
+                particleCount: 35,
+                spread: 160,
+                origin: { y: -0.2, x: Math.random() },
+                colors: ['#FFD700', '#FFFACD', '#DAA520', '#FFCC00'],
+                gravity: 1.1,
+                scalar: 3, // Encore plus gros !
+                ticks: 250
+            });
+        }, 50);
+
+        document.title = "🏆 PAT LE GOAT - UNIQUE VAINQUEUR 🏆";
+        
+    }, { once: true });
+}
+
+// Ajoute ceci dans ton script ou ton CSS pour l'animation de pulsation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes pulse {
+        from { transform: scale(1); opacity: 0.8; }
+        to { transform: scale(1.1); opacity: 1; }
+    }
+`;
+document.head.appendChild(style);
