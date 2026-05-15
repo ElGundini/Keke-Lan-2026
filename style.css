@@ -447,7 +447,7 @@ header h1 {
 
 /* On réinitialise le style pour cette nouvelle position */
 .keke-dance-mini {
-    width: 60px; /* Taille ajustée pour le titre */
+    width: 60px; 
     height: auto;
     mix-blend-mode: screen; 
     filter: brightness(1.1) contrast(1.1) drop-shadow(0 0 5px var(--accent-glow));
@@ -455,7 +455,7 @@ header h1 {
     pointer-events: none;
 }
 
-/* On nettoie l'ancien style .keke-dance s'il ne sert plus ailleurs */
+
 .keke-dance {
     display: none;
 }
@@ -463,4 +463,203 @@ header h1 {
 @keyframes floating {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+.guide-container {
+    margin-top: 20px;
+    border: 1px dashed #ffcc00;
+    padding: 10px;
+}
+
+.guide-trigger {
+    background: none;
+    border: none;
+    color: #ffcc00;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+}
+
+.guide-content {
+    display: none; 
+    padding: 15px;
+    color: #e0e0e0;
+    font-size: 0.85rem;
+    border-top: 1px dashed #ffcc00;
+    margin-top: 10px;
+}
+
+.guide-content ol {
+    padding-left: 20px;
+}
+
+.guide-content li {
+    margin-bottom: 8px;
+}
+
+.path {
+    background: #222;
+    padding: 2px 5px;
+    color: #ffcc00;
+}
+
+.note {
+    font-style: italic;
+    font-size: 0.75rem;
+    color: #777;
+}
+
+.guide-content.active {
+    display: block;
+}
+
+.wreckfest-section {
+    border-color: rgba(255, 204, 0, 0.3);
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.05);
+}
+
+.wreckfest-visual {
+    flex: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, rgba(255, 204, 0, 0.1) 0%, transparent 70%);
+    padding: 20px;
+}
+
+.car-render {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+    transform: perspective(500px) rotateY(-10deg);
+}
+
+.wreckfest-description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #aaa;
+    margin: 10px 0;
+}
+
+.wreckfest-dl {
+    background: #4a3c00 !important;
+    border-color: #ffcc00 !important;
+    color: #ffcc00 !important;
+    flex: 2 !important;
+}
+
+.guide-trigger {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #444;
+    color: #888;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    font-size: 0.7rem;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
+}
+
+.pro-tip {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #222;
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.pro-tip strong { color: #ffcc00; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .wreckfest-visual { border-right: none; border-bottom: 1px solid #333; }
+    .car-render { max-width: 200px; }
+}
+/* --- ANIMATION WRECKFEST PNG --- */
+.car-render {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+    transform: perspective(500px) rotateY(-10deg);
+    
+    /* On applique les deux animations : flottement et glitch visuel */
+    animation: car-float 4s ease-in-out infinite, car-glow 3s linear infinite;
+}
+
+/* Effet de flottement (lévitation légère) */
+@keyframes car-float {
+    0%, 100% { transform: perspective(500px) rotateY(-10deg) translateY(0); }
+    50% { transform: perspective(500px) rotateY(-12deg) translateY(-15px); }
+}
+
+/* Effet de scanline/brillance qui passe sur la voiture */
+@keyframes car-glow {
+    0% { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)) brightness(1); }
+    45% { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)) brightness(1.1) contrast(1.2); }
+    50% { filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.4)) brightness(1.3); }
+    55% { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)) brightness(1.1) contrast(1.2); }
+    100% { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)) brightness(1); }
+}
+
+
+.car-render:hover {
+    animation: car-float 0.2s ease-in-out infinite alternate;
+    cursor: help;
+}
+/* --- QUICK NAV MENU --- */
+.quick-nav {
+    position: sticky;
+    top: 35px; /* Juste sous le news-ticker */
+    width: 100%;
+    background: rgba(5, 5, 7, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--panel-border);
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+.nav-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+}
+
+.nav-code {
+    color: var(--accent);
+    margin-right: 5px;
+    font-family: 'Courier New', monospace;
+}
+
+.nav-item:hover {
+    color: var(--accent);
+    background: rgba(0, 255, 136, 0.05);
+    border-color: rgba(0, 255, 136, 0.2);
+    text-shadow: 0 0 8px var(--accent-glow);
+}
+
+@media (max-width: 600px) {
+    .nav-container { gap: 10px; }
+    .nav-item { font-size: 0.65rem; padding: 5px; }
+}
+
+/* Ajout d'un scroll-margin pour ne pas que le titre soit caché par le menu lors du clic */
+.section-title {
+    scroll-margin-top: 100px; 
 }

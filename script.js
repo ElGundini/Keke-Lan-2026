@@ -188,6 +188,20 @@ window.addEventListener('resize', () => {
     }
 });
 
+
 // Lancement
 init();
 animate()
+
+function toggleGuide() {
+    const guide = document.getElementById('install-guide');
+    const trigger = document.querySelector('.guide-trigger');
+    
+    if (guide.style.display === 'block') {
+        guide.style.display = 'none';
+        trigger.innerText = "[ + ] PROTOCOLE";
+    } else {
+        guide.style.display = 'block';
+        trigger.innerText = "[ - ] FERMER";
+    }
+}
