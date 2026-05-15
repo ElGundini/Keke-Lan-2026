@@ -319,8 +319,8 @@ if (patTroll) {
         }
 
         // B. LANCER LE SACRE DE PAT
-        const crownAudio = new Audio('music/crown.mp3');
-        crownAudio.currentTime = 66; 
+        const crownAudio = new Audio('music/moz.mp3');
+        crownAudio.currentTime = 68; 
         crownAudio.play();
 
         // Masquer le GLB
