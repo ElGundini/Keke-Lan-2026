@@ -205,3 +205,58 @@ function toggleGuide() {
         trigger.innerText = "[ - ] FERMER";
     }
 }
+// --- LOGIQUE DE LA MODALE PERSONNALISÉE ---
+
+function openPopup(message, showConfirm = false, onConfirm = null) {
+    const popup = document.getElementById('custom-popup');
+    const msgElem = document.getElementById('popup-message');
+    const actionsElem = document.getElementById('popup-actions');
+
+    msgElem.innerText = message;
+    actionsElem.innerHTML = ''; // Reset des boutons
+
+    if (showConfirm) {
+        // Bouton "OUI / ABOULE"
+        const okBtn = document.createElement('button');
+        okBtn.className = 'sub-btn';
+        okBtn.style.background = 'var(--accent)';
+        okBtn.style.color = 'var(--bg)';
+        okBtn.innerText = "OUI, J'ACHÈTE !";
+        okBtn.onclick = () => {
+            if (onConfirm) onConfirm();
+        };
+        
+        // Bouton "NON / ANNULER"
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'sub-btn';
+        cancelBtn.innerText = "ANNULER";
+        cancelBtn.onclick = closePopup;
+
+        actionsElem.appendChild(cancelBtn);
+        actionsElem.appendChild(okBtn);
+    } else {
+        // Simple bouton Fermer
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'sub-btn';
+        closeBtn.innerText = "COMPRIS";
+        closeBtn.onclick = closePopup;
+        actionsElem.appendChild(closeBtn);
+    }
+
+    popup.style.display = 'flex';
+}
+
+function closePopup() {
+    document.getElementById('custom-popup').style.display = 'none';
+}
+
+// --- NOUVELLE FONCTION ACHAT ---
+function buyTshirt() {
+    const text1 = "Tu veux vraiment acheter cette MERDE ?...";
+    
+    openPopup(text1, true, () => {
+        // Ce code s'exécute si on clique sur OUI
+        const text2 = "OK OK... Envoi moi les infos de ta carte bancaire par message sur steam (https://steamcommunity.com/id/Lgundi/), j'apporterai ton t-shirt à la LAN, tkt.";
+        openPopup(text2, false);
+    });
+}

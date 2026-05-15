@@ -23,6 +23,9 @@
 				<span>Le saviez-vous ? Pat est le seul détenteur du titre de la Lan Cup.</span>
 				<span class="separator">///</span>
 				<span>Arrête de te la péter, Pat.</span>
+				<span class="separator">///</span>
+				<span>Le saviez-vous ? Yassine a plus 4000 heures sur Counter Strike. Il va nous niquer la gueule, ça va être violent.</span>
+				<span class="separator">///</span>
 			</div>
 			<div class="ticker-text">
 				<span>« Witch It » est à -85 % ! L’offre prend fin le 15 mai, alors prenez-le maintenant si ce n’est pas déjà fait : <a href="https://store.steampowered.com/app/559650/Witch_It/" target="_blank" class="ticker-link">WITCH IT</a></span>
@@ -30,6 +33,9 @@
 				<span>Le saviez-vous ? Pat est le seul détenteur du titre de la Lan Cup.</span>
 				<span class="separator">///</span>
 				<span>Arrête de te la péter, Pat.</span>
+				<span class="separator">///</span>
+				<span>Le saviez-vous ? Yassine a plus 4000 heures sur Counter Strike. Il va nous niquer la gueule, ça va être violent.</span>
+				<span class="separator">///</span>
 			</div>
 		</div>
 	</div>
@@ -39,6 +45,7 @@
         <a href="#un" class="nav-item"><span class="nav-code">01.</span> LE PROGRAMME</a>
         <a href="#deux" class="nav-item"><span class="nav-code">02.</span> AMIS STEAM</a>
         <a href="#trois" class="nav-item"><span class="nav-code">03.</span> INFOS UTILES</a>
+        <a href="#quatre" class="nav-item"><span class="nav-code">04.</span> LA BOUTIQUE</a>
     </div>
 </nav>
 
@@ -97,7 +104,7 @@
         </div>
         
         <div class="featured-body">
-            <div class="status-label" style="color: #ffcc00;">> EXPLOIT : MONEY MONEY MONEY FAST CAR ♫</div>
+            <div class="status-label" style="color: #ffcc00;">> EXPLOIT WRECKFEST : MONEY MONEY MONEY FAST CAR ♫</div>
             <h2 class="main-title">ARGENT & XP ILLIMITÉ</h2>
             
             <p class="wreckfest-description">
@@ -132,12 +139,65 @@
         </div>
     </div>
 </section>
+<h2 class="section-title" id="quatre">LA BOUTIQUE</h2>
+<section class="featured-card shop-section">
+    <div class="featured-content">
+        <div class="shop-visual">
+            <img src="images/keketshirt.png" alt="Keke T-Shirt" class="tshirt-render">
+            <div class="promo-badge">PLUS HOT QUE LE CLIMAT</div>
+        </div>
+        <div class="featured-body">
+            <div class="status-label">> IL EST ENFIN DISPOOOOOO</div>
+            <h2 class="main-title">T-SHIRT "KEKE LAN 2026"</h2>
+            <p class="shop-description">
+    Deviens l'alpha de la LAN avec ce textile en fibre de carbone véritable*. 
+    Garanti sans odeur de transpiration après 72h de LAN.
+    
+    <br><br>
+
+    Technologie KEKEX™ intégrée : jusqu'à +37 FPS sur les jeux de la KEKE LAN**.
+    Réduction automatique du skill issue de 12%.
+    
+    <br><br>
+
+    Effets secondaires possibles :
+    tendance à répondre "bof" ou "mouais" à tout,
+    augmentation du niveau de nonchalance,
+    perte totale d'émotions.
+    
+    <br><span class="note">
+        *Mensonge total.<br>
+        **Résultats obtenus sur Counter-Strike 2 en LOW en regardant le sol.
+    </span>
+</p>
+            <div class="action-bar">
+                <button class="steam-btn" onclick="buyTshirt()">
+                    <span class="btn-icon">🛒</span> SEULEMENT 69€99
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
 </div>
+
 
 <a href="https://elgundini.github.io/Lethal-League-Tournoi/" class="tournament-btn" title="REJOINDRE LE TOURNOI !">
     <img src="https://i.ibb.co/4RW5JpL1/kekelanlethalleague.png" alt="Tournament Logo">
 </a>
 
 <script src="script.js"></script>
+<div id="custom-popup" class="popup-overlay">
+    <div class="popup-content featured-card">
+        <div class="popup-header">
+            <span class="status-label">> ALERTE SYSTÈME</span>
+            <button class="popup-close" onclick="closePopup()">[ X ]</button>
+        </div>
+        <div class="popup-body">
+            <p id="popup-message"></p>
+        </div>
+        <div class="popup-actions" id="popup-actions">
+            </div>
+    </div>
+</div>
 </body>
 </html>
