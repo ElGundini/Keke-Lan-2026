@@ -389,3 +389,16 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+function toggleRepoGuide() {
+    const guide = document.getElementById('repo-install-guide');
+    const trigger = document.querySelectorAll('.wreckfest-section .guide-trigger')[1]; // Cible le 2ème bouton guide
+    
+    if (guide.style.display === 'block') {
+        guide.style.display = 'none';
+        trigger.innerText = "[ + ] INSTALLATION";
+    } else {
+        guide.style.display = 'block';
+        trigger.innerText = "[ - ] FERMER";
+    }
+}
