@@ -402,3 +402,16 @@ function toggleRepoGuide() {
         trigger.innerText = "[ - ] FERMER";
     }
 }
+function toggleLockdownGuide() {
+    const guide = document.getElementById('lockdown-install-guide');
+    // On cible le bouton cliqué dans la section Lockdown Protocol
+    const trigger = document.querySelector('#lockdown-install-guide').previousElementSibling.querySelector('.guide-trigger');
+    
+    if (guide.style.display === 'block') {
+        guide.style.display = 'none';
+        trigger.innerText = "[ + ] INSTALLATION";
+    } else {
+        guide.style.display = 'block';
+        trigger.innerText = "[ - ] FERMER";
+    }
+}
