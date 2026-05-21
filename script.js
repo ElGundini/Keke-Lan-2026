@@ -1,15 +1,15 @@
 console.log("SCRIPT CHARGÉ !");
 const games = [
-    { name: "LAST TRAIN OUTTA' WORMTOWN", steamId: "2318480", date: "2026-05-22T20:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2318480/header.jpg?t=1752864862", day: "VEN" },
-    { name: "LOCKDOWN Protocol", steamId: "2780980", date: "2026-05-22T22:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2780980/header.jpg?t=1763485356", day: "VEN" },
-    { name: "Counter-Strike 2", steamId: "730", date: "2026-05-23T00:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/header.jpg?t=1749053861", day: "SAM" },	
-    { name: "Lethal League", steamId: "261180", date: "2026-05-23T13:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/261180/header.jpg?t=1667229581", day: "SAM" },	
-    { name: "Marvel Rivals", steamId: "2767030", date: "2026-05-23T14:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2767030/975bfe11c5b6843c866587138aec911964b60c85/header.jpg?t=1778133944", day: "SAM" },	
-    { name: "Mini Royale", steamId: "1657090", date: "2026-05-23T16:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1657090/header.jpg?t=1748336130", day: "SAM" },	
-    { name: "Wreckfest", steamId: "228380", date: "2026-05-23T21:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/228380/header.jpg?t=1742490584", day: "SAM" },
-    { name: "Witch It", steamId: "559650", date: "2026-05-23T23:00:00", img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/559650/header.jpg", day: "SAM" },
-    { name: "Age of Mythology", steamId: "1934680", date: "2026-05-24T10:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1934680/header.jpg?t=1777489006", day: "DIM" },
-    { name: "Trackmania", steamId: "2225070", date: "2026-05-24T13:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2225070/7f7b095f71d8e3b54612927c0bb4b9f0713eac21/header.jpg?t=1769529679", day: "DIM" }
+    { name: "LAST TRAIN OUTTA' WORMTOWN", steamId: "2318480", date: "2026-05-22T20:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2318480/header.jpg?t=1752864862", day: "VEN", buyUrl: "https://store.steampowered.com/app/2318480/Last_Train_Outta_Wormtown/" },
+    { name: "LOCKDOWN Protocol", steamId: "2780980", date: "2026-05-22T22:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2780980/header.jpg?t=1763485356", day: "VEN", buyUrl: "https://elgundini.github.io/Keke-Lan-2026/#trois" },
+    { name: "Counter-Strike 2", steamId: "730", date: "2026-05-23T00:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/header.jpg?t=1749053861", day: "SAM", buyUrl: "https://store.steampowered.com/app/730/CounterStrike_2/" },	
+    { name: "Lethal League", steamId: "261180", date: "2026-05-23T13:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/261180/header.jpg?t=1667229581", day: "SAM", buyUrl: "" }, // Pas besoin de télécharger	
+    { name: "Marvel Rivals", steamId: "2767030", date: "2026-05-23T14:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2767030/975bfe11c5b6843c866587138aec911964b60c85/header.jpg?t=1778133944", day: "SAM", buyUrl: "https://store.steampowered.com/app/2767030/Marvel_Rivals/" },	
+    { name: "Mini Royale", steamId: "1657090", date: "2026-05-23T16:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1657090/header.jpg?t=1748336130", day: "SAM", buyUrl: "https://store.steampowered.com/app/1657090/Mini_Royale/" },	
+    { name: "Wreckfest", steamId: "228380", date: "2026-05-23T21:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/228380/header.jpg?t=1742490584", day: "SAM", buyUrl: "https://www.xbox.com/en-US/games/store/wreckfest/9NG06CSMM97P" },
+    { name: "Witch It", steamId: "559650", date: "2026-05-23T23:00:00", img: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/559650/header.jpg", day: "SAM", buyUrl: "https://store.steampowered.com/app/559650/Witch_It/" },
+    { name: "Age of Mythology", steamId: "1934680", date: "2026-05-24T10:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1934680/header.jpg?t=1777489006", day: "DIM", buyUrl: "https://www.xbox.com/en-US/games/age-of-mythology-retold" },
+    { name: "Trackmania", steamId: "2225070", date: "2026-05-24T13:00:00", img: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/11020/header.jpg?t=1548090419", day: "DIM", buyUrl: "https://store.steampowered.com/app/11020/TrackMania_Nations_Forever/" }
 ];
 
 const team = [
@@ -48,8 +48,16 @@ function init() {
         const card = document.createElement('div');
         card.className = `game-card ${isPassed ? 'passed' : ''}`;
         
+        // Condition pour afficher ou non le bouton "Obtenir"
+        const buyButtonHTML = game.buyUrl 
+            ? `<a href="${game.buyUrl}" target="_blank" class="game-get-btn">OBTENIR</a>`
+            : `<span class="game-get-btn no-download">PAS BESOIN</span>`;
+        
         card.innerHTML = `
-            <img src="${game.img}">
+            <div class="game-card-media">
+                <img src="${game.img}">
+                ${buyButtonHTML}
+            </div>
             <div class="game-card-info">
                 <div class="game-meta">${game.day} // ${gameDate.getHours()}H${gameDate.getMinutes().toString().padStart(2, '0')}</div>
                 <div class="game-title">${game.name}</div>
